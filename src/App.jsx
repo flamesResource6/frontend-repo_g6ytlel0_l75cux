@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Watermark from './components/Watermark'
 import Sidebar from './components/Sidebar'
@@ -14,6 +14,13 @@ export default function App() {
     'Kab. Tasikmalaya','Kab. Ciamis','Kab. Garut','Kab. Bandung','Kab. Kuningan','Kab. Pangandaran'
   ], [])
 
+  // simulate realtime update trigger on filters change
+  useEffect(() => {
+    // Here we would call backend with new filters and update charts/cards/tables
+    // For now, just log to demonstrate reactivity
+    console.log('Filters updated', filters)
+  }, [filters])
+
   return (
     <div className="min-h-screen relative overflow-hidden" style={{background: 'linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 50%, #F8FAFC 100%)'}}>
       {/* animated gradient aura */}
@@ -27,9 +34,9 @@ export default function App() {
         <Sidebar open={sidebarOpen} onClose={()=>setSidebarOpen(false)} activeKey={active} onNavigate={(k)=>{ setActive(k); setSidebarOpen(false) }} />
 
         <div className="flex-1 min-w-0">
-          <Header title="Dashboard Bendahara" onToggleSidebar={()=>setSidebarOpen(true)} />
+          <Header title="Dashboard Bendahara" onToggleSidebar={()=>setSidebarOpen(true)} filters={filters} onFiltersChange={setFilters} />
 
-          {/* quick filters bar (already in Header), now full filters below */}
+          {/* Filter lengkap */}
           <div className="px-4 lg:px-6 py-4">
             <div className="rounded-2xl p-4 bg-white/70 border border-slate-200 shadow-sm">
               <div className="text-slate-700 font-medium mb-3">Filter Lengkap</div>
